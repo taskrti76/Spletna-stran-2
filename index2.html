@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zapiski za študente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+        }
+
+        header {
+            background: #1e293b;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        h2 {
+            margin-top: 40px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 6px;
+        }
+
+        details {
+            margin-bottom: 15px;
+            background: white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        summary {
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        ul {
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        footer {
+            height: 120px;
+        }
+    </style>
+</head>
+<body>
+
+<header>📚 Zapiski za študente fizike</header>
+
+<div class="container">
+
+<input type="text" id="search" placeholder="🔍 Išči predmet...">
+
+<div id="content"></div>
+
+</div>
+
+<footer></footer>
+
+<script>
+const driveData = {
+
+    "1. LETNIK": {
+        "Astronomska opazovanja": {
+            "Vaje": "1O8_ZUHQfPQAd_SwoHiClhu5nS050vswu"
+        },
+        "Kako stvari delujejo": {
+            "Predavanja": "11i_RubO5VFeVt85d44jv1vqzBR508_GS"
+        },
+        "Klasična fizika": {
+            "Listi s formulami": "1XDllkeWjalfvUqlUQfcurogZx5fv3Xe5",
+            "Predavanja": "1luJ6pcomKW1dO_kzyF1YoFAhyE2SHqii",
+            "Vaje": "1_2sxIWyY7d6K7-6YhsXSKqaMQJzZp-No"
+        },
+        "Matematika 1": {
+            "Vaje": "1Gz1608Kkhiq6tT9ll24VOOQC2xQJ9wWB"
+        },
+        "Matematika 2": {
+            "Vaje": "1DQN2SIMVkgDK83r8Ngka2NM15RRQOZ52"
+        },
+        "Proseminar A": {
+            "Predavanja": "1qLe9clDzskLy2VyQ7rpnfpgVapIP7O9C"
+        }
+    },
+
+    "2. LETNIK": {
+        "Astronomija 1": {
+            "Vaje": "14xu_PgHCIh_prjsVuQjUfi1sx77xzgxc"
+        },
+        "Klasična mehanika": {
+            "Predavanja": "19biiCAvg5CXdje92HbUjJ5Wx4bzxMZn5",
+            "Vaje": "1LCY0JTwIReRvs5dG2kFWRElEnGlJJA_J"
+        },
+        "Matematika 3": {
+            "Lista s formulami": "1o2WOnRvhOwPXYAqRF1EcZhz075aI0WM8",
+            "Vaje": "18zI_HG4N8Af7pssBZJmx2MSf4mxCZCXr"
+        },
+        "Matematika 4": {
+            "Lista s formulami": "1GvkgGWxEJsi0I87qZlcEaHk3HTVVVdFx",
+            "Vaje": "1Ky8UOkTqqfIx5_TYBDoVkz1dpoGutDKt"
+        },
+        "Moderna fizika 1": {
+            "Predavanja": "1Vyu69ltnXLEWDNm_iwEdZ1G4RCM4k0wa",
+            "Vaje": "1d1W9-bg_cV8Qxvcyp1xn4RsFS7w8gzcW"
+        },
+        "Moderna fizika 2": {
+            "Lista s formulami": "16y2YkLFMzWmh_w-eC8ongHscvV6QX68R",
+            "Predavanja": "1ikKZ6qs8kED6zrzduL1eovTovINhc41X",
+            "Vaje": "1l7Jp1xr3wUovTT4GaECJ4nI9j_oRhd74"
+        },
+        "Naše in druga osončja": {
+            "Vaje": "1m2vRmrm3xwwZln2hD820uFLiBY-sNOv_",
+            "Zapiski za ustni izpit": "1soEdeMDbHWRyvOlH3G6AW_S1pUTcTcDs"
+        },
+        "Statistična termodinamika": {
+            "Predavanja": "1_k3Hy3b-YFYIfYIs84YslGw3IOECZ8G8",
+            "Tutorstvo 1. del": "14PrL58FrgQmrRGnLgYqK4KbM5t7nL5TQ",
+            "Tutorstvo 2. del": "1EIZ8PRtWCD-ZonWqKNXeNUZ5Pdl8P6lY",
+            "Vaje": "1W3mdxbIGsQSzwuoYGvAGzKLg3h_-On99"
+        },
+        "Verjetnost v fiziki": {
+            "List s formulami": "1brfahslFwsdrypPiCQ3KHR5Chzqcr7sz",
+            "Predavanja": "1PogytW5G0kj4MRl_YkgNpDNpp3Ff-77g",
+            "Vaje": "1OfBeu6DxQ3wwO6UcYUZXex_Owiz2JynH"
+        }
+    },
+
+    "3. LETNIK": {
+        "Elektromagnetno polje": {
+            "Predavanja": "151WP_hdL1OCRtvR1SYOFntc-AdJnT9M9",
+            "Vaje": "1-BRA0BDySdjgaToQXGLWivWksfG8R0Di"
+        },
+        "Fizika jedra in osnovnih delcev": {
+            "Predavanja": "1CtL4fj7ZXRdgGYaKCA5E79FxH1Jt0d8c",
+            "Vaje": "13XSpHvKeSFi2Vp1FW081xeMkSH65riH0",
+            "Zapiski za ustni izpit": "1f7yOmSsChuN-tJHoniCLDcxl67cv7z7V"
+        },
+        "Fizika trdne snovi": {
+            "Predavanja": "1J7WdeA0IOFz5JwEcdFo6kKT5b9H7uluI",
+            "Vaje": "18vg6L72hXOvpzQc8ueVRdN6p3dI6zc7B"
+        },
+        "Fizikalna merjenja": {
+            "Predavanja": "1ty99IaV3HFxvPSI0zjkgRXiLk-LoZiY8",
+            "Vaje": "1GGh8enh3b4fPd-4t0hFBR1eaS0SXaQdT",
+            "Zapiski za ustni izpit": "1OwimxlWMGNpv-o_gWY_U8odcLXJOvdR2"
+        },
+        "Jedrska tehnika in energetika": {
+            "Vaje": "1SUYNiGSCRCG4pyObCNGU9gCHVLeAVkT9",
+            "Zapiski za ustni izpit": "1sWa9AtCuSXCk_bYPAaVNl2hvNoPZeX7c"
+        },
+        "Kvantna mehanika": {
+            "Predavanja": "1DGlYKz0P1J4CNCMga9h0DhCyJYw6mMtZ",
+            "Vaje": "1LsKkQRvVG8zgUzZiJbmv4MdAAoX2reYn"
+        },
+        "Mehanika kontinuov": {
+            "Predavanja": "1xfpOVHiDsx_hC0tqy1fm-4_ph18EcA0c",
+            "Vaje": "1vJw8l5UxImgkFcHjQFJnueLxd5og-GYp"
+        },
+        "Merjenje ionizirajočega sevanja": {
+            "Predavanja + vaje": "1ajdBsywsWFjNcV46K-7RWMVTUgYuM-Bn"
+        },
+        "Reaktorska fizika": {
+            "Predavanja + vaje": "1TmHa53vc5XuSaqVEpDSoCcbLVYh4vLBA",
+            "Zapiski za ustni izpit": "1joTucl03x-QncR6NSTxdgP8Qe7G0ZzjL"
+        }
+    }
+};
+
+function preview(id) {
+    return `https://drive.google.com/file/d/${id}/preview`;
+}
+
+function download(id) {
+    return `https://drive.google.com/uc?export=download&id=${id}`;
+}
+
+function render() {
+    const container = document.getElementById("content");
+    container.innerHTML = "";
+
+    for (const year in driveData) {
+        const yearTitle = document.createElement("h2");
+        yearTitle.textContent = year;
+        container.appendChild(yearTitle);
+
+        for (const subject in driveData[year]) {
+            const details = document.createElement("details");
+
+            const summary = document.createElement("summary");
+            summary.textContent = subject;
+            details.appendChild(summary);
+
+            const ul = document.createElement("ul");
+
+            for (const category in driveData[year][subject]) {
+                const id = driveData[year][subject][category];
+                const li = document.createElement("li");
+
+                li.innerHTML = `${category}: 
+                    <a href="${preview(id)}" target="_blank">👁 Preview</a> | 
+                    <a href="${download(id)}">⬇ Download</a>`;
+
+                ul.appendChild(li);
+            }
+
+            details.appendChild(ul);
+            container.appendChild(details);
+        }
+    }
+}
+
+render();
+
+document.getElementById("search").addEventListener("keyup", function() {
+    const filter = this.value.toLowerCase();
+    const subjects = document.querySelectorAll("details");
+
+    subjects.forEach(s => {
+        s.style.display = s.querySelector("summary").textContent.toLowerCase().includes(filter) ? "" : "none";
+    });
+});
+</script>
+
+</body>
+</html>
