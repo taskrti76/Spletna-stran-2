@@ -1,93 +1,169 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-    <meta charset="UTF-8">
-    <title>Zapiski za študente</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>Renejini EigenNotes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fb;
-            margin: 0;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #dee8ff;
+}
 
-        header {
-            background: #1e293b;
-            color: white;
-            padding: 25px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-        }
+/* HEADER */
+header {
+    text-align: center;
+    padding: 35px 20px 10px;
+    background: #1e293b;
+    color: white;
+}
 
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            padding: 20px;
-        }
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 25px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
+header p {
+    color: #666;
+    margin-top: 6px;
+}
 
-        h2 {
-            margin-top: 40px;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 6px;
-        }
+#search {
+    width: 100%;
+    max-width: 420px;
+    margin-top: 18px;
+    padding: 12px 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
 
-        details {
-            margin-bottom: 15px;
-            background: white;
-            border-radius: 8px;
-            padding: 10px 15px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-        }
+header input {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        summary {
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.subtitle {
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 8px;
+    opacity: 0.85;
+}
 
-        ul {
-            margin-top: 10px;
-        }
+/* CONTAINER */
+.container {
+    max-width: 1250px;
+    margin: auto;
+    padding: 20px;
+}
 
-        li {
-            margin-bottom: 6px;
-        }
+/* YEAR TITLE */
+.year-title {
+    margin-top: 40px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 6px;
+}
 
-        a {
-            text-decoration: none;
-            color: #2563eb;
-            font-weight: bold;
-        }
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 20px;
+}
 
-        footer {
-            height: 120px;
-        }
-    </style>
+
+/* CARD */
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.card hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 10px 0;
+}
+
+.card ul {
+    padding-left: 18px;
+    margin: 0;
+}
+
+.card li {
+    margin-bottom: 6px;
+}
+
+.card a {
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    background: #1e293b;
+    color: #cbd5e1;
+    margin-top: 60px;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+.footer-content p {
+    margin: 6px 0;
+    font-size: 14px;
+}
+
+.footer-content a {
+    color: #60a5fa;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* MOBILE */
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 </head>
 <body>
 
-<header>📚 Zapiski za študente fizike</header>
+<header>
+    <h1>📚 Renejini EigenNotes</h1>
+        <div class="subtitle">
+        Zbrani moji zapiski iz predavanj, vaj in nekaj zapiskov za izpite za FMF študente
+        </div>
+    <input type="text" id="search" placeholder="🔍 Išči predmet..." />
+</header>
 
-<div class="container">
-
-<input type="text" id="search" placeholder="🔍 Išči predmet...">
-
-<div id="content"></div>
-
-</div>
-
-<footer></footer>
+<div class="container" id="content"></div>
 
 <script>
 const driveData = {
@@ -100,7 +176,7 @@ const driveData = {
             "Predavanja": "11i_RubO5VFeVt85d44jv1vqzBR508_GS"
         },
         "Klasična fizika": {
-            "Listi s formulami": "1XDllkeWjalfvUqlUQfcurogZx5fv3Xe5",
+            "List s formulami": "1XDllkeWjalfvUqlUQfcurogZx5fv3Xe5",
             "Predavanja": "1luJ6pcomKW1dO_kzyF1YoFAhyE2SHqii",
             "Vaje": "1_2sxIWyY7d6K7-6YhsXSKqaMQJzZp-No"
         },
@@ -124,11 +200,11 @@ const driveData = {
             "Vaje": "1LCY0JTwIReRvs5dG2kFWRElEnGlJJA_J"
         },
         "Matematika 3": {
-            "Lista s formulami": "1o2WOnRvhOwPXYAqRF1EcZhz075aI0WM8",
+            "List s formulami": "1o2WOnRvhOwPXYAqRF1EcZhz075aI0WM8",
             "Vaje": "18zI_HG4N8Af7pssBZJmx2MSf4mxCZCXr"
         },
         "Matematika 4": {
-            "Lista s formulami": "1GvkgGWxEJsi0I87qZlcEaHk3HTVVVdFx",
+            "List s formulami": "1GvkgGWxEJsi0I87qZlcEaHk3HTVVVdFx",
             "Vaje": "1Ky8UOkTqqfIx5_TYBDoVkz1dpoGutDKt"
         },
         "Moderna fizika 1": {
@@ -136,7 +212,7 @@ const driveData = {
             "Vaje": "1d1W9-bg_cV8Qxvcyp1xn4RsFS7w8gzcW"
         },
         "Moderna fizika 2": {
-            "Lista s formulami": "16y2YkLFMzWmh_w-eC8ongHscvV6QX68R",
+            "List s formulami": "16y2YkLFMzWmh_w-eC8ongHscvV6QX68R",
             "Predavanja": "1ikKZ6qs8kED6zrzduL1eovTovINhc41X",
             "Vaje": "1l7Jp1xr3wUovTT4GaECJ4nI9j_oRhd74"
         },
@@ -206,52 +282,81 @@ function download(id) {
     return `https://drive.google.com/uc?export=download&id=${id}`;
 }
 
+function createCard(subject, files) {
+    let items = "";
+
+    for (const title in files) {
+        const id = files[title];
+
+        items += `
+            <li>
+                <b>${title}</b> —
+                <a href="${preview(id)}" target="_blank">Preview</a> |
+                <a href="${download(id)}">Download</a>
+            </li>
+        `;
+    }
+
+    return `
+        <div class="card" data-subject="${subject.toLowerCase()}">
+            <h3>${subject}</h3>
+            <hr>
+            <ul>${items}</ul>
+        </div>
+    `;
+}
+
+
 function render() {
     const container = document.getElementById("content");
-    container.innerHTML = "";
 
     for (const year in driveData) {
-        const yearTitle = document.createElement("h2");
-        yearTitle.textContent = year;
-        container.appendChild(yearTitle);
 
-        for (const subject in driveData[year]) {
-            const details = document.createElement("details");
+        const section = document.createElement("section");
 
-            const summary = document.createElement("summary");
-            summary.textContent = subject;
-            details.appendChild(summary);
+        section.innerHTML = `
+            <h2 class="year-title">${year}</h2>
+            <div class="grid">
+                ${Object.entries(driveData[year])
+                    .map(([subject, files]) => createCard(subject, files))
+                    .join("")}
+            </div>
+        `;
 
-            const ul = document.createElement("ul");
-
-            for (const category in driveData[year][subject]) {
-                const id = driveData[year][subject][category];
-                const li = document.createElement("li");
-
-                li.innerHTML = `${category}: 
-                    <a href="${preview(id)}" target="_blank">👁 Preview</a> | 
-                    <a href="${download(id)}">⬇ Download</a>`;
-
-                ul.appendChild(li);
-            }
-
-            details.appendChild(ul);
-            container.appendChild(details);
-        }
+        container.appendChild(section);
     }
 }
 
-render();
-
 document.getElementById("search").addEventListener("keyup", function() {
     const filter = this.value.toLowerCase();
-    const subjects = document.querySelectorAll("details");
+    const cards = document.querySelectorAll(".card");
 
-    subjects.forEach(s => {
-        s.style.display = s.querySelector("summary").textContent.toLowerCase().includes(filter) ? "" : "none";
+    cards.forEach(card => {
+        const subject = card.dataset.subject;
+        card.style.display = subject.includes(filter) ? "" : "none";
     });
 });
+
+
+render();
 </script>
 
+
 </body>
+
+<footer>
+    <div class="footer-content">
+        <p>© 2026 Renejini EigenNotes</p>
+        <p>Zadnja posodobitev: februar 2026</p>
+        <p>
+            Narejeno za študente fizike · 
+            <a href="https://mail.google.com/mail/?view=cm&to=rm80175@student.uni-lj.si" target="_blank">
+                rm80175@student.uni-lj.si
+            </a>
+        </p>
+    </div>
+</footer>
+
 </html>
+
+
