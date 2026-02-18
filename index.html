@@ -4,10 +4,16 @@
 <meta charset="UTF-8">
 <title>Renejini EigenNotes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico">
+
 
 <style>
 body {
     margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     font-family: Arial, sans-serif;
     background: #dee8ff;
 }
@@ -58,6 +64,8 @@ header input {
     max-width: 1250px;
     margin: auto;
     padding: 20px;
+    min-height: calc(75vh - 35px - 20px - 35px);
+    margin-bottom: 40px;
 }
 
 /* YEAR TITLE */
@@ -117,7 +125,6 @@ header input {
 footer {
     background: #1e293b;
     color: #cbd5e1;
-    margin-top: 60px;
     padding: 35px 20px;
     text-align: center;
 }
@@ -136,6 +143,77 @@ footer {
 .footer-content a:hover {
     text-decoration: underline;
 }
+
+.file-list {
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+}
+
+.toggleable-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centrirano */
+    margin-top: 30px;
+    gap:50px; /* razmik med toggleable card-i */
+}
+
+.toggleable {
+    position: relative;
+    width: 600px; /* fiksna širina toggleable card-a */
+    text-align: left;
+    padding-bottom: 20px; /* da je prostor za tab spodaj */
+}
+
+.toggleable .toggle-tab {
+    position: absolute;
+    bottom: 0; /* spodaj card-a */
+    left: 50%;
+    transform: translateX(-50%) translateY(100%); /* jeziček štrli navzdol */
+    width: 40px; /* ožji jeziček */
+    background: #2563eb;
+    color: white;
+    border-radius: 0 0 6px 6px; /* zgornji rob okrogljen, spodnji ravno */
+    cursor: pointer;
+    user-select: none;
+    padding: 4px 0;
+    font-weight: bold;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.toggle-tab::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%; /* nad jezičkom */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    margin-bottom: 6px; /* prostor med jezičkom in tooltipom */
+    z-index: 10;
+}
+
+.toggle-tab:hover::after {
+    opacity: 1;
+}
+
+.toggleable .toggle-tab:hover {
+    background: #1d4ed8;
+}
+
+.toggleable .file-list {
+    margin-top: 10px;
+    text-align: left;
+}
+
+
 
 
 
@@ -166,6 +244,13 @@ footer {
 <div class="container" id="content"></div>
 
 <script>
+
+const toggleableSubjects = [
+    "fizikalni praktikum iv",
+    "fizikalni praktikum v",
+    "matematično-fizikalni praktikum"
+];
+
 const driveData = {
 
     "1. LETNIK": {
@@ -230,7 +315,13 @@ const driveData = {
             "List s formulami": "1brfahslFwsdrypPiCQ3KHR5Chzqcr7sz",
             "Predavanja": "1PogytW5G0kj4MRl_YkgNpDNpp3Ff-77g",
             "Vaje": "1OfBeu6DxQ3wwO6UcYUZXex_Owiz2JynH"
-        }
+        },
+        "Fizikalni praktikum IV": {
+            "Elektrooptični pojav": "",
+            "Sevanje črnega telesa": "",
+            "Spektrometer": "",
+            "Ultrazvok": ""
+        },
     },
 
     "3. LETNIK": {
@@ -270,7 +361,27 @@ const driveData = {
         "Reaktorska fizika": {
             "Predavanja + vaje": "1TmHa53vc5XuSaqVEpDSoCcbLVYh4vLBA",
             "Zapiski za ustni izpit": "1joTucl03x-QncR6NSTxdgP8Qe7G0ZzjL"
-        }
+        },
+        "Fizikalni praktikum V": {
+            "Elektrooptični pojav": "",
+            "Sevanje črnega telesa": "",
+            "Spektrometer": "",
+            "Ultrazvok": ""
+        },
+        "Matematično-Fizikalni praktikum": {
+            "1. Airyjevi funkciji": "",
+            "2. Naključni sprehodi": "",
+            "3. Anharmonski oscilator": "",
+            "4. Fourierova analiza": "",
+            "5. Hitra Fourierova transformacija": "",
+            "6. Enačbe hoda": "",
+            "7. Newtonov zakon": "",
+            "8. Robni problemi": "",
+            "9. Spektralne metode": "",
+            "10. Diferenčne metode": "",
+            "11. Galerkinova metoda": "",
+            "12. Strojno učenje": "",
+        },
     }
 };
 
@@ -282,50 +393,90 @@ function download(id) {
     return `https://drive.google.com/uc?export=download&id=${id}`;
 }
 
-function createCard(subject, files) {
+
+
+
+function createCard(subject, files, toggleable = false) {
     let items = "";
-
-    for (const title in files) {
-        const id = files[title];
-
+    for (const category in files) {
+        const id = files[category];
         items += `
             <li>
-                <b>${title}</b> —
-                <a href="${preview(id)}" target="_blank">Preview</a> |
-                <a href="${download(id)}">Download</a>
+                ${category}: 
+                <a href="${preview(id)}" target="_blank">👁 Preview</a> | 
+                <a href="${download(id)}">⬇ Download</a>
             </li>
         `;
     }
 
     return `
-        <div class="card" data-subject="${subject.toLowerCase()}">
+        <div class="card ${toggleable ? "toggleable" : ""}" data-subject="${subject.toLowerCase()}">
             <h3>${subject}</h3>
             <hr>
-            <ul>${items}</ul>
+            <ul class="file-list" style="${toggleable ? 'display:none;' : ''}">
+                ${items}
+            </ul>
+            ${toggleable ? '<div class="toggle-tab" data-tooltip="Prikaži/skrij vsebino">▼</div>' : ''}
+
         </div>
     `;
 }
 
 
+
 function render() {
     const container = document.getElementById("content");
+    container.innerHTML = "";
 
     for (const year in driveData) {
-
         const section = document.createElement("section");
+
+        const subjects = Object.entries(driveData[year]);
+        const normalCards = [];
+        const toggleCards = [];
+
+        subjects.forEach(([subject, files]) => {
+            const toggleable = toggleableSubjects.includes(subject.toLowerCase());
+            const cardHTML = createCard(subject, files, toggleable);
+            if (toggleable) toggleCards.push(cardHTML);
+            else normalCards.push(cardHTML);
+        });
 
         section.innerHTML = `
             <h2 class="year-title">${year}</h2>
             <div class="grid">
-                ${Object.entries(driveData[year])
-                    .map(([subject, files]) => createCard(subject, files))
-                    .join("")}
+                ${normalCards.join("")}
+            </div>
+            <div class="toggleable-container">
+                ${toggleCards.join("")}
             </div>
         `;
 
         container.appendChild(section);
     }
 }
+
+
+
+
+
+
+document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("toggle-tab")) {
+        const card = e.target.closest(".toggleable");
+        const list = card.querySelector(".file-list");
+
+        const isOpen = list.style.display !== "none";
+        list.style.display = isOpen ? "none" : "block";
+
+        e.target.textContent = isOpen ? "▼" : "▲";
+    }
+});
+
+
+
+
+
 
 document.getElementById("search").addEventListener("keyup", function() {
     const filter = this.value.toLowerCase();
@@ -342,21 +493,30 @@ render();
 </script>
 
 
+
 </body>
 
 <footer>
     <div class="footer-content">
         <p>© 2026 Renejini EigenNotes</p>
         <p>Zadnja posodobitev: februar 2026</p>
+        </p> Narejeno za študente fizike </p>
         <p>
-            Narejeno za študente fizike · 
+            · 
             <a href="https://mail.google.com/mail/?view=cm&to=rm80175@student.uni-lj.si" target="_blank">
                 rm80175@student.uni-lj.si
             </a>
+        </p>
+        </p>
+            · 
+            <a href="discord://discordapp.com/users/renejamarn#7708" target="_blank">Discord</a>
         </p>
     </div>
 </footer>
 
 </html>
+
+
+
 
 
