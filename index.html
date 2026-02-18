@@ -4,8 +4,11 @@
 <meta charset="UTF-8">
 <title>Renejini EigenNotes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="/favicon.ico">
-
+<link rel="icon" href="favicon_io2/favicon.ico">
+<link rel="icon" href="favicon_io2/favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="favicon_io2/favicon-16x16.png" type="image/png" sizes="16x16">
+<link rel="apple-touch-icon" href="favicon_io2/apple-touch-icon.png" sizes="180x180">
+<link rel="apple-touch-icon" href="favicon_io2/apple-touch-icon.png" sizes="180x180">
 
 <style>
 body {
@@ -64,7 +67,7 @@ header input {
     max-width: 1250px;
     margin: auto;
     padding: 20px;
-    min-height: calc(75vh - 35px - 20px - 35px);
+    min-height: calc(54vh - 35px - 20px - 35px);
     margin-bottom: 40px;
 }
 
@@ -155,6 +158,7 @@ footer {
     align-items: center; /* centrirano */
     margin-top: 30px;
     gap:50px; /* razmik med toggleable card-i */
+    overflow: visible;   /* test */
 }
 
 .toggleable {
@@ -162,6 +166,7 @@ footer {
     width: 600px; /* fiksna širina toggleable card-a */
     text-align: left;
     padding-bottom: 20px; /* da je prostor za tab spodaj */
+    overflow: visible; /* test */
 }
 
 .toggleable .toggle-tab {
@@ -211,24 +216,166 @@ footer {
 .toggleable .file-list {
     margin-top: 10px;
     text-align: left;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.6s ease;
+}
+
+/* Dark toggle */
+
+/* #dark-toggle {
+    margin-top: 12px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+    font-size: 14px;
+} */
+
+body.dark {
+    background: #0f172a;
+}
+
+body.dark .card {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+body.dark .year-title {
+    color: #e2e8f0;
+    border-color: #334155;
+}
+
+body.dark .card a {
+    color: #60a5fa;
+}
+
+body.dark .card hr {
+    border-color: #334155;
 }
 
 
+.switch {
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+    margin-top: 14px;
+    position: relative;
+}
 
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
 
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #475569;
+    border-radius: 28px;
+    transition: 0.3s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 4px;
+    bottom: 4px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+input:checked + .slider {
+    background: #2563eb;
+}
+
+input:checked + .slider::before {
+    transform: translateX(24px);
+}
+
+.slider .icon {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+input:checked + .slider .icon {
+    right: auto;
+    left: 6px;
+}
 
 /* MOBILE */
-@media (max-width: 900px) {
+/* @media (max-width: 1200px) {
     .grid {
         grid-template-columns: repeat(2, 1fr);
     }
-}
+} */
 
-@media (max-width: 600px) {
+/* @media (max-width: 900px){
     .grid {
         grid-template-columns: 1fr;
     }
+} */
+
+
+* {
+    box-sizing: border-box;
 }
+
+body {
+    overflow-x: hidden; /* move it here instead of container */
+}
+
+.container {
+    max-width: 1250px;
+    margin: auto;
+    padding: 20px;
+    min-height: calc(54vh - 35px - 20px - 35px);
+    margin-bottom: 40px;
+    /* remove overflow-x: hidden from here */
+}
+
+.year-content {
+    overflow: visible; /* changed from hidden */
+    transition: max-height 0.3s ease;
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .toggleable {
+        width: 100%;
+    }
+
+    .year-title {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .year-arrow {
+        display: inline;
+    }
+
+    .year-content {
+        overflow: hidden; /* only hidden on mobile where we need the collapse */
+        max-height: 0px;
+    }
+}
+
+
 </style>
 </head>
 <body>
@@ -239,6 +386,14 @@ footer {
         Zbrani moji zapiski iz predavanj, vaj in nekaj zapiskov za izpite za FMF študente
         </div>
     <input type="text" id="search" placeholder="🔍 Išči predmet..." />
+    
+    <label class="switch">
+        <input type="checkbox" id="dark-toggle">
+        <span class="slider">
+            <span class="icon">☽</span>
+        </span>
+    </label>
+
 </header>
 
 <div class="container" id="content"></div>
@@ -317,10 +472,18 @@ const driveData = {
             "Vaje": "1OfBeu6DxQ3wwO6UcYUZXex_Owiz2JynH"
         },
         "Fizikalni praktikum IV": {
-            "Elektrooptični pojav": "",
+            "Elektro-optični pojav": "",
             "Sevanje črnega telesa": "",
             "Spektrometer": "",
-            "Ultrazvok": ""
+            "Ultrazvok": "",
+            "Karakteristika I(U)": "",
+            "Dielektrična anizotropija TK": "",
+            "Franck-Hertzov poskus": "",
+            "Milikanov poskus": "",
+            "Sklopljeno nihanje kroga": "",
+            "Uklon svetlobe": "",
+            "Vrtavka": "",
+            "Določanje Boltzmannove konst.": "",
         },
     },
 
@@ -362,11 +525,21 @@ const driveData = {
             "Predavanja + vaje": "1TmHa53vc5XuSaqVEpDSoCcbLVYh4vLBA",
             "Zapiski za ustni izpit": "1joTucl03x-QncR6NSTxdgP8Qe7G0ZzjL"
         },
+        "Seminar": {
+            "Seminarska naloga": "",
+            "Predstavitev PowerPoint": "",
+        },
         "Fizikalni praktikum V": {
-            "Elektrooptični pojav": "",
-            "Sevanje črnega telesa": "",
-            "Spektrometer": "",
-            "Ultrazvok": ""
+            "Difuzija": "",
+            "Elektronska spinska resonanca": "",
+            "Elektro-optični pojav v TK": "",
+            "Hallov pojav": "",
+            "Holografija": "",
+            "Kotna korelacija anihilacijskih γ žarkov": "",
+            "Osnove mikrovalovne tehnike": "",
+            "Poskusi z žarki X": "",
+            "Spektrometrija žarkov γ": "",
+            "Sunkovna jedrska magnetna resonanca": "",
         },
         "Matematično-Fizikalni praktikum": {
             "1. Airyjevi funkciji": "",
@@ -395,7 +568,6 @@ function download(id) {
 
 
 
-
 function createCard(subject, files, toggleable = false) {
     let items = "";
     for (const category in files) {
@@ -413,7 +585,7 @@ function createCard(subject, files, toggleable = false) {
         <div class="card ${toggleable ? "toggleable" : ""}" data-subject="${subject.toLowerCase()}">
             <h3>${subject}</h3>
             <hr>
-            <ul class="file-list" style="${toggleable ? 'display:none;' : ''}">
+            <ul class="file-list">
                 ${items}
             </ul>
             ${toggleable ? '<div class="toggle-tab" data-tooltip="Prikaži/skrij vsebino">▼</div>' : ''}
@@ -421,8 +593,6 @@ function createCard(subject, files, toggleable = false) {
         </div>
     `;
 }
-
-
 
 function render() {
     const container = document.getElementById("content");
@@ -457,6 +627,55 @@ function render() {
 }
 
 
+function render() {
+    const container = document.getElementById("content");
+    container.innerHTML = "";
+
+    for (const year in driveData) {
+        const section = document.createElement("section");
+
+        const subjects = Object.entries(driveData[year]);
+        const normalCards = [];
+        const toggleCards = [];
+
+        subjects.forEach(([subject, files]) => {
+            const toggleable = toggleableSubjects.includes(subject.toLowerCase());
+            const cardHTML = createCard(subject, files, toggleable);
+            if (toggleable) toggleCards.push(cardHTML);
+            else normalCards.push(cardHTML);
+        });
+
+        section.innerHTML = `
+            <h2 class="year-title">
+                ${year} <span class="year-arrow">▼</span>
+            </h2>
+            <div class="year-content">
+                <div class="grid">
+                    ${normalCards.join("")}
+                </div>
+                <div class="toggleable-container">
+                    ${toggleCards.join("")}
+                </div>
+            </div>
+        `;
+
+        container.appendChild(section);
+    }
+
+    document.querySelectorAll(".year-title").forEach(title => {
+        title.addEventListener("click", function() {
+            const isMobilePortrait = window.innerWidth <= 600 && window.innerHeight > window.innerWidth;
+            if (!isMobilePortrait) return;
+
+            const content = this.nextElementSibling;
+            const arrow = this.querySelector(".year-arrow");
+            const isOpen = content.style.maxHeight && content.style.maxHeight !== "0px";
+
+            content.style.maxHeight = isOpen ? "0px" : "9999px";
+            arrow.textContent = isOpen ? "▼" : "►";
+        });
+    });
+}
 
 
 
@@ -466,15 +685,24 @@ document.addEventListener("click", function(e) {
         const card = e.target.closest(".toggleable");
         const list = card.querySelector(".file-list");
 
-        const isOpen = list.style.display !== "none";
-        list.style.display = isOpen ? "none" : "block";
-
+        const isOpen = list.style.maxHeight && list.style.maxHeight !== "0px";
+        list.style.maxHeight = isOpen ? "0px" : "1000px";
         e.target.textContent = isOpen ? "▼" : "▲";
     }
 });
 
 
+// document.addEventListener("click", function(e) {
+//     if (e.target.classList.contains("toggle-tab")) {
+//         const card = e.target.closest(".toggleable");
+//         const list = card.querySelector(".file-list");
 
+//         const isOpen = list.style.maxHeight && list.style.maxHeight !== "0px";
+//         list.style.maxHeight = isOpen ? "0px" : "500px";
+
+//         e.target.textContent = isOpen ? "▼" : "▲";
+//     }
+// });
 
 
 
@@ -487,6 +715,21 @@ document.getElementById("search").addEventListener("keyup", function() {
         card.style.display = subject.includes(filter) ? "" : "none";
     });
 });
+
+
+const toggle = document.getElementById("dark-toggle");
+
+toggle.addEventListener("change", function() {
+    document.body.classList.toggle("dark", this.checked);
+    localStorage.setItem("darkMode", this.checked);
+    document.querySelector(".slider .icon").textContent = this.checked ? "☀" : "☽";
+});
+
+if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark");
+    toggle.checked = true;
+    document.querySelector(".slider .icon").textContent = "☀";
+}
 
 
 render();
@@ -511,10 +754,17 @@ render();
             · 
             <a href="discord://discordapp.com/users/renejamarn#7708" target="_blank">Discord</a>
         </p>
+
+        <div style="height: 30px;"></div>
+
+        <img src="Favicon2.png" alt="description" width="200" height="200">
+
     </div>
 </footer>
 
 </html>
+
+
 
 
 
