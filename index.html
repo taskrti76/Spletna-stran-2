@@ -316,11 +316,27 @@ input:checked + .slider .icon {
 }
 
 /* MOBILE */
-/* @media (max-width: 1200px) {
+
+
+@media (max-width: 1200px) {
     .grid {
         grid-template-columns: repeat(2, 1fr);
     }
-} */
+
+    .year-title {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .year-arrow {
+        display: inline;
+    }
+
+    .year-content {
+        overflow: hidden;
+        max-height: 0px;
+    }
+}
 
 /* @media (max-width: 900px){
     .grid {
@@ -373,16 +389,6 @@ body {
         overflow: hidden; /* only hidden on mobile where we need the collapse */
         max-height: 0px;
     }
-    
-    .toggleable-container {
-        overflow: visible;
-    }
-
-    .toggleable {
-        overflow: visible;
-        margin-bottom: 30px; /* extra space so the tab doesn't overlap next card */
-    }
-    
 }
 
 
@@ -637,6 +643,56 @@ function render() {
 }
 
 
+// function render() {
+//     const container = document.getElementById("content");
+//     container.innerHTML = "";
+
+//     for (const year in driveData) {
+//         const section = document.createElement("section");
+
+//         const subjects = Object.entries(driveData[year]);
+//         const normalCards = [];
+//         const toggleCards = [];
+
+//         subjects.forEach(([subject, files]) => {
+//             const toggleable = toggleableSubjects.includes(subject.toLowerCase());
+//             const cardHTML = createCard(subject, files, toggleable);
+//             if (toggleable) toggleCards.push(cardHTML);
+//             else normalCards.push(cardHTML);
+//         });
+
+//         section.innerHTML = `
+//             <h2 class="year-title">
+//                 ${year} <span class="year-arrow">▼</span>
+//             </h2>
+//             <div class="year-content">
+//                 <div class="grid">
+//                     ${normalCards.join("")}
+//                 </div>
+//                 <div class="toggleable-container">
+//                     ${toggleCards.join("")}
+//                 </div>
+//             </div>
+//         `;
+
+//         container.appendChild(section);
+//     }
+
+//     document.querySelectorAll(".year-title").forEach(title => {
+//         title.addEventListener("click", function() {
+//             const isMobilePortrait = window.innerWidth <= 600 && window.innerHeight > window.innerWidth;
+//             if (!isMobilePortrait) return;
+
+//             const content = this.nextElementSibling;
+//             const arrow = this.querySelector(".year-arrow");
+//             const isOpen = content.style.maxHeight && content.style.maxHeight !== "0px";
+
+//             content.style.maxHeight = isOpen ? "0px" : "9999px";
+//             arrow.textContent = isOpen ? "▼" : "►";
+//         });
+//     });
+// }
+
 function render() {
     const container = document.getElementById("content");
     container.innerHTML = "";
@@ -674,8 +730,8 @@ function render() {
 
     document.querySelectorAll(".year-title").forEach(title => {
         title.addEventListener("click", function() {
-            const isMobilePortrait = window.innerWidth <= 600 && window.innerHeight > window.innerWidth;
-            if (!isMobilePortrait) return;
+            const isMobile = window.innerWidth <= 900;
+            if (!isMobile) return;
 
             const content = this.nextElementSibling;
             const arrow = this.querySelector(".year-arrow");
@@ -686,8 +742,6 @@ function render() {
         });
     });
 }
-
-
 
 
 document.addEventListener("click", function(e) {
@@ -773,6 +827,7 @@ render();
 </footer>
 
 </html>
+
 
 
 
