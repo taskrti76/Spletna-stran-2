@@ -8,7 +8,7 @@
 <link rel="icon" href="favicon_io2/favicon-32x32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="favicon_io2/favicon-16x16.png" type="image/png" sizes="16x16">
 <link rel="apple-touch-icon" href="favicon_io2/apple-touch-icon.png" sizes="180x180">
-<link rel="apple-touch-icon" href="favicon_io2/apple-touch-icon.png" sizes="180x180">
+
 
 <style>
 body {
@@ -325,7 +325,7 @@ body {
     max-width: 1250px;
     margin: auto;
     padding: 20px;
-    min-height: calc(54vh - 35px - 20px - 35px);
+    min-height: calc(53vh - 35px - 20px - 35px);
     margin-bottom: 40px;
     /* remove overflow-x: hidden from here */
 }
@@ -392,7 +392,13 @@ body {
 
 <div class="container" id="content"></div>
 
+<p id="no-results" style="display:none; text-align:center; margin-top:40px; color:#ffffff;">
+    Noben predmet ne ustreza iskanju.
+</p>
+
 <script>
+
+localStorage.removeItem("darkMode");    
 
 const toggleableSubjects = [
     "fizikalni praktikum iv",
@@ -466,18 +472,16 @@ const driveData = {
             "Vaje": "1OfBeu6DxQ3wwO6UcYUZXex_Owiz2JynH"
         },
         "Fizikalni praktikum IV": {
-            "Elektro-optični pojav": "",
-            "Sevanje črnega telesa": "",
-            "Spektrometer": "",
-            "Ultrazvok": "",
-            "Karakteristika I(U)": "",
-            "Dielektrična anizotropija TK": "",
-            "Franck-Hertzov poskus": "",
-            "Milikanov poskus": "",
-            "Sklopljeno nihanje kroga": "",
-            "Uklon svetlobe": "",
-            "Vrtavka": "",
-            "Določanje Boltzmannove konst.": "",
+            "Elektro-optični pojav": "1D7XorUL5BP0pZaTyNCFCUyeB7cN3dv27",
+            "Sevanje črnega telesa": "1YFiSVtXYCyS5zeJEurkP5lbHewNMLlbI",
+            "Spektrometer": "1BLuHHh6xuB4EiCEAY-v6UDCcCXvF4s7M",
+            "Karakteristika I(U)": "1vZmEsn-fVGbVhihyjYBiWXFOGT4_Ykue",
+            "Franck-Hertzov poskus": "1suHj16Kt9R75_n3ZyhrUMYgmPe8dL8ps",
+            "Milikanov poskus": "1iZJxTsJbKhk0N2gniRGpHfKAsqdCN2vn",
+            "Sklopljeno nihanje kroga": "1Z0NYxrwAWcxKeQJg2OLGNVByg8ZFzswj",
+            "Uklon svetlobe": "1pE1E6HlheN_ltWlMHnWInchMaJZX6ck2",
+            "Vrtavka": "13yW0zjnv_rZ8L1TRbLAAbDRA2ZdLoK5g",
+            "Določanje Boltzmannove konst.": "1LZB6zUO3ID1M175xqDzQGYEpjRWayOSz",
         },
     },
 
@@ -521,32 +525,32 @@ const driveData = {
         },
         "Seminar": {
             "Seminarska naloga": "",
-            "Predstavitev PowerPoint": "",
+            "Predstavitev": "",
         },
         "Fizikalni praktikum V": {
-            "Difuzija": "",
-            "Elektronska spinska resonanca": "",
-            "Elektro-optični pojav v TK": "",
-            "Hallov pojav": "",
-            "Holografija": "",
-            "Kotna korelacija anihilacijskih γ žarkov": "",
-            "Osnove mikrovalovne tehnike": "",
-            "Poskusi z žarki X": "",
-            "Spektrometrija žarkov γ": "",
-            "Sunkovna jedrska magnetna resonanca": "",
+            "Difuzija": "1gb_bsx1sjCaHF1hafscXM2YP4wOXdn3W",
+            "Elektronska spinska resonanca": "1L0VqT7E9FWHYAKkyXiqTLyl4fwL_7vq1",
+            "Elektro-optični pojav v TK": "1D-Tbnxgi2cbYILU0rkw_yhVSXFlykVgq",
+            "Hallov pojav": "1mGlkcvgRr-BtHTX1TZU8fldV7wp3b1aQ",
+            "Holografija": "196I0tuFZEgnQqoCS9cuWR-6PAgEMpHrV",
+            "Kotna korelacija anihilacijskih γ žarkov": "1ZNvTFJPV-EwGS1SCaP0XXu4C0nGBX5yW",
+            "Osnove mikrovalovne tehnike": "1uLceEUd1jPuC2n28UgY7RRFToXOMHMJC",
+            "Poskusi z žarki X": "1diB2tN5uo0KMdZPzgojYHER0a5VJVOZf",
+            "Spektrometrija žarkov γ": "131JGsK7h7dPLCQaRo5ZGQI-3wjp6U5Ch",
+            "Sunkovna jedrska magnetna resonanca": "1940pi3P78zTG8CUEI7NSVQVyRVq3gBjy",
         },
         "Matematično-Fizikalni praktikum": {
-            "1. Airyjevi funkciji": "",
-            "2. Naključni sprehodi": "",
-            "3. Anharmonski oscilator": "",
-            "4. Fourierova analiza": "",
-            "5. Hitra Fourierova transformacija": "",
-            "6. Enačbe hoda": "",
-            "7. Newtonov zakon": "",
-            "8. Robni problemi": "",
-            "9. Spektralne metode": "",
-            "10. Diferenčne metode": "",
-            "11. Galerkinova metoda": "",
+            "1. Airyjevi funkciji": "1NlI1BJANgEXLljYB-ae-WCCSaz2_0ZT3",
+            "2. Naključni sprehodi": "1RQ_lqx-h3OPSe1ABRVj1xgAAtKRWxn3g",
+            "3. Anharmonski oscilator": "14fT5AgDPN8X99ogLknuFZXn2RevuIMAM",
+            "4. Fourierova analiza": "1IWPF08-OW87f89mTx59c2UGXM-EpFbs4",
+            "5. Hitra Fourierova transformacija": "1Q5KJBVFbYzhqMGYcLbnuAIYpcS9MpYgo",
+            "6. Enačbe hoda": "1-WrLVMXHafYdEdoOBXxrPVDSo5nZrn67",
+            "7. Newtonov zakon": "1NLGvLFxyHAyZvc4utzddK3N307gvH14a",
+            "8. Robni problemi": "1M7tyDUaKSsFwNjjC7Kwreuy2k0cR2YBu",
+            "9. Spektralne metode": "1DS991P0obE9DB4_lyfMqs8eP5VXHD7jx",
+            "10. Diferenčne metode": "1pmuGcT4_ok_cGyqYwLdTXCNyVfAPwu6w",
+            "11. Galerkinova metoda": "1rJFspZobTOKCWzMj_7q4lVr9LRlgr60Z",
             "12. Strojno učenje": "",
         },
     }
@@ -588,37 +592,6 @@ function createCard(subject, files, toggleable = false) {
     `;
 }
 
-function render() {
-    const container = document.getElementById("content");
-    container.innerHTML = "";
-
-    for (const year in driveData) {
-        const section = document.createElement("section");
-
-        const subjects = Object.entries(driveData[year]);
-        const normalCards = [];
-        const toggleCards = [];
-
-        subjects.forEach(([subject, files]) => {
-            const toggleable = toggleableSubjects.includes(subject.toLowerCase());
-            const cardHTML = createCard(subject, files, toggleable);
-            if (toggleable) toggleCards.push(cardHTML);
-            else normalCards.push(cardHTML);
-        });
-
-        section.innerHTML = `
-            <h2 class="year-title">${year}</h2>
-            <div class="grid">
-                ${normalCards.join("")}
-            </div>
-            <div class="toggleable-container">
-                ${toggleCards.join("")}
-            </div>
-        `;
-
-        container.appendChild(section);
-    }
-}
 
 
 function render() {
@@ -641,7 +614,7 @@ function render() {
 
         section.innerHTML = `
             <h2 class="year-title">
-                ${year} <span class="year-arrow">▼</span>
+                ${year} <span class="year-arrow">►</span>
             </h2>
             <div class="year-content">
                 <div class="grid">
@@ -691,12 +664,17 @@ document.addEventListener("click", function(e) {
 document.getElementById("search").addEventListener("keyup", function() {
     const filter = this.value.toLowerCase();
     const cards = document.querySelectorAll(".card");
+    let anyVisible = false;
 
     cards.forEach(card => {
-        const subject = card.dataset.subject;
-        card.style.display = subject.includes(filter) ? "" : "none";
+        const match = card.dataset.subject.includes(filter);
+        card.style.display = match ? "" : "none";
+        if (match) anyVisible = true;
     });
+
+    document.getElementById("no-results").style.display = anyVisible ? "none" : "block";
 });
+
 
 
 const toggle = document.getElementById("dark-toggle");
@@ -707,10 +685,26 @@ toggle.addEventListener("change", function() {
     document.querySelector(".slider .icon").textContent = this.checked ? "☀" : "☽";
 });
 
-if (localStorage.getItem("darkMode") === "true") {
-    document.body.classList.add("dark");
-    toggle.checked = true;
-    document.querySelector(".slider .icon").textContent = "☀";
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function(e) {
+    // only follow system if user hasn't manually set a preference
+    if (localStorage.getItem("darkMode") === null) {
+        const isDark = e.matches;
+        document.body.classList.toggle("dark", isDark);
+        toggle.checked = isDark;
+        document.querySelector(".slider .icon").textContent = isDark ? "☀" : "☽";
+    }
+});
+
+const savedMode = localStorage.getItem("darkMode");
+
+if (savedMode === null) {
+    // no saved preference, use system
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (prefersDark) {
+        document.body.classList.add("dark");
+        toggle.checked = true;
+        document.querySelector(".slider .icon").textContent = "☀";
+    }
 }
 
 
@@ -725,14 +719,14 @@ render();
     <div class="footer-content">
         <p>© 2026 Renejini EigenNotes</p>
         <p>Zadnja posodobitev: februar 2026</p>
-        </p> Narejeno za študente fizike </p>
+        <p> Narejeno za študente fizike </p>
         <p>
             · 
             <a href="https://mail.google.com/mail/?view=cm&to=rm80175@student.uni-lj.si" target="_blank">
                 rm80175@student.uni-lj.si
             </a>
         </p>
-        </p>
+        <p>
             · 
             <a href="discord://discordapp.com/users/renejamarn#7708" target="_blank">Discord</a>
         </p>
@@ -745,6 +739,7 @@ render();
 </footer>
 
 </html>
+
 
 
 
