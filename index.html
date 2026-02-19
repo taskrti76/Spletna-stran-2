@@ -642,6 +642,8 @@ function render() {
             arrow.textContent = isOpen ? "▼" : "►";
         });
     });
+
+    window.addEventListener("orientationchange", () => location.reload());
 }
 
 
@@ -739,6 +741,7 @@ render();
 </footer>
 
 </html>
+
 
 
 
